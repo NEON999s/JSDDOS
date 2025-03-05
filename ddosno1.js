@@ -1,6 +1,5 @@
 const net = require('net');
 const tls = require('tls');
-const fs = require('fs');
 const https = require('https');
 
 const proxyUrl = 'https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt';
@@ -10,7 +9,7 @@ function fetchProxies(callback) {
         let data = '';
         res.on('data', chunk => { data += chunk; });
         res.on('end', () => {
-            const proxies = data.trim().split('\n');
+            const proxies = data.trim().split('\n').map(proxy => proxy.trim());
             callback(proxies);
         });
     }).on('error', (err) => {
